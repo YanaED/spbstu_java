@@ -24,4 +24,9 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> getPending(String userId) {
         return notificationRepository.findPending(userId);
     }
+
+    @Override
+    public void save(Notification notification) {
+        notificationRepository.save(notification);
+    }
 }

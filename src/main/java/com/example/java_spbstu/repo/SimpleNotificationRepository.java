@@ -24,7 +24,7 @@ public class SimpleNotificationRepository implements NotificationRepository {
         return DATA.stream().filter(n -> n.getUserId().equals(userId) && !n.isProcessed()).collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unused")
+    @Override
     public void save(Notification notification) {
         DATA.add(notification);
     }
