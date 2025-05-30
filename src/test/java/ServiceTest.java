@@ -12,15 +12,18 @@ import com.example.java_spbstu.service.NotificationServiceImpl;
 import com.example.java_spbstu.service.TaskServiceImpl;
 import com.example.java_spbstu.service.UserServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
 
 public class ServiceTest {
     private final TaskRepository taskRepository = new SimpleTaskRepository();
-    private final TaskServiceImpl taskService = new TaskServiceImpl(taskRepository);
+    private final RabbitTemplate rabbitTemplate = mock(RabbitTemplate.class);
+    private final TaskServiceImpl taskService = new TaskServiceImpl(taskRepository, new TestPublisher(rabbitTemplate));
     private final NotificationRepository notificationRepository = new SimpleNotificationRepository();
     private final NotificationServiceImpl notificationService = new NotificationServiceImpl(notificationRepository);
     private final UserRepository userRepository = new SimpleUserRepository();

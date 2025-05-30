@@ -1,3 +1,4 @@
+import com.example.java_spbstu.amqp.TaskEventPublisher;
 import com.example.java_spbstu.dto.UserDto;
 import com.example.java_spbstu.entity.Notification;
 import com.example.java_spbstu.entity.Task;
@@ -29,6 +30,8 @@ public class IntegrationTest {
     private NotificationRepository notificationRepository;
     @Mock
     private TaskRepository taskRepository;
+    @Mock
+    private TaskEventPublisher taskEventPublisher;
     @Mock
     private UserRepository userRepository;
     @InjectMocks
