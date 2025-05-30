@@ -44,6 +44,7 @@ public class RealTaskRepository implements TaskRepository {
     }
 
     @Override
+    @Transactional
     public List<Task> findOverdueTasks() {
         return jpaRepository.findOverdueTasks();
     }
