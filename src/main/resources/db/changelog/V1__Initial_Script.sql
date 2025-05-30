@@ -1,3 +1,7 @@
+--liquibase formatted sql
+
+--changeset init:1
+
 CREATE TABLE IF NOT EXISTS users
 (
     id       VARCHAR PRIMARY KEY,
