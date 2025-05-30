@@ -4,6 +4,8 @@ import com.example.java_spbstu.repo.TaskRepository;
 import com.example.java_spbstu.dto.TaskDto;
 import com.example.java_spbstu.entity.Task;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     @Override
+    @CacheEvict(value = {"task", "task.pending"}, allEntries = true)
     public Task createTask(TaskDto dto) {
         Task task = new Task();
         task.setId(randomUUID());
@@ -32,16 +35,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "task", key = "#userId")
     public List<Task> getAllTasks(String userId) {
         return taskRepository.findAllByUserId(userId);
     }
 
     @Override
+    @Cacheable(value = "task.pending", key = "#userId")
     public List<Task> getPendingTasks(String userId) {
         return taskRepository.findPendingByUserId(userId);
     }
 
     @Override
+    @CacheEvict(value = {"task", "task.pending"}, allEntries = true)
     public void markTaskAsDeleted(UUID uuid) {
         taskRepository.markAsDeleted(uuid);
     }

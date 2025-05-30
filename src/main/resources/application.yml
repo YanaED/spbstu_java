@@ -3,6 +3,14 @@ spring:
     name: java_spbstu
   profiles:
     default: db
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3m
+  data:
+    redis:
+      host: localhost
+      port: 6379
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/task_db
