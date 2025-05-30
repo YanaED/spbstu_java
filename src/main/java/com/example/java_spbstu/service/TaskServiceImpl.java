@@ -1,8 +1,10 @@
 package com.example.java_spbstu.service;
 
-import com.example.java_spbstu.repo.TaskRepository;
+import com.example.java_spbstu.amqp.TaskCreatedEvent;
+import com.example.java_spbstu.amqp.TaskEventPublisher;
 import com.example.java_spbstu.dto.TaskDto;
 import com.example.java_spbstu.entity.Task;
+import com.example.java_spbstu.repo.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,6 +21,7 @@ import static java.util.UUID.randomUUID;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskEventPublisher taskEventPublisher;
 
     @Override
     @CacheEvict(value = {"task", "task.pending"}, allEntries = true)
@@ -31,7 +34,15 @@ public class TaskServiceImpl implements TaskService {
         task.setTargetDate(dto.getTargetDate());
         task.setCompleted(false);
         task.setDeleted(false);
-        return taskRepository.save(task);
+        task = taskRepository.save(task);
+        taskEventPublisher.publishTaskCreated(new TaskCreatedEvent(
+                task.getId(),
+                task.getTitle(),
+                task.getUserId(),
+                task.getTargetDate(),
+                task.getCreatedAt()
+        ));
+        return task;
     }
 
     @Override
