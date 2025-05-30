@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.time.LocalDateTime.now;
+
 @Repository
 @Profile("simple")
 public class SimpleTaskRepository implements TaskRepository {
@@ -40,5 +42,10 @@ public class SimpleTaskRepository implements TaskRepository {
         if (task != null) {
             task.setDeleted(true);
         }
+    }
+
+    @Override
+    public List<Task> findOverdueTasks() {
+        return DATA.values().stream().filter(t -> now().isAfter(t.getTargetDate())).toList();
     }
 }
