@@ -48,19 +48,13 @@
 2. **Соберите проект с помощью Gradle:**
 
    ```bash
-   ./gradlew build
+   ./gradlew build --no-daemon
    ```
 
 3. **Создайте Docker-контейнеры:**
 
    ```bash
    docker-compose up -d --build
-   ```
-
-4. **Запустите сервер:**
-
-   ```bash
-   ./gradlew bootRun
    ```
 
    Приложение будет доступно по адресу: [http://localhost:8080](http://localhost:8080)
@@ -71,8 +65,8 @@
 
 ### 👤 UserController
 
-- `POST /users/users` – регистрация пользователя
-- `GET /users/users/login?username={username}` – вход по имени пользователя
+- `POST /users` – регистрация пользователя
+- `GET /users/login?username={username}` – вход по имени пользователя
 
 ### 📋 TaskController
 
