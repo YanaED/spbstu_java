@@ -42,4 +42,10 @@ public class RealTaskRepository implements TaskRepository {
             jpaRepository.save(task);
         });
     }
+
+    @Override
+    @Transactional
+    public List<Task> findOverdueTasks() {
+        return jpaRepository.findOverdueTasks();
+    }
 }

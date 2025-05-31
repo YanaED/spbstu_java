@@ -30,12 +30,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.flywaydb:flyway-core:9.22.3'
+    implementation 'org.liquibase:liquibase-core' // flyway бесплатный не работал, заменила на liquibase
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('bootJar') {
+    mainClass.set('com.example.java_spbstu.JavaSpbstuApplication')
 }
 
 test {
