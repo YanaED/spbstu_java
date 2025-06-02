@@ -21,6 +21,6 @@ public class SimpleUserRepository implements UserRepository {
 
     @Override
     public User findByUsername(String username) {
-        return DATA.get(username);
+        return DATA.values().stream().filter(u -> u.getUsername().equals(username)).findFirst().get();
     }
 }
